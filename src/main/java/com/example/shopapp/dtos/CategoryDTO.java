@@ -1,2 +1,5 @@
-package com.example.shopapp.dtos;public class CategoryDTO {
+package com.example.shopapp.dtos;
+
+public class CategoryDTO {
+    private String name;
 }
