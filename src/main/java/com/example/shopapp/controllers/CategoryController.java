@@ -1,4 +1,4 @@
-package com.example.shopapp.Controller;
+package com.example.shopapp.controllers;
 
 
 
@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/categories") // http://localhost:8088/api/v1/categories
+@RequestMapping("api/v1/categories") // url: http://localhost:8088/api/v1/categories
 public class CategoryController {
 
     @GetMapping("")
