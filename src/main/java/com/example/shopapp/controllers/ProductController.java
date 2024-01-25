@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,8 +44,9 @@ public class ProductController {
 
     @PostMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> createProduct(
-            @Valid @RequestBody ProductDTO productDTO,
-            @RequestPart("file") MultipartFile file,
+            // ModelAttribute will directly transform JSON request body correspond to instance Product
+            // RequestBody will return raw JSON request body.
+            @Valid @ModelAttribute ProductDTO productDTO,
             BindingResult result
     ) {
         try {
@@ -55,8 +57,13 @@ public class ProductController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-            // Size of file must be less than or equal to 10MB.
-            if (file != null) {
+            List<MultipartFile> files = productDTO.getFiles();
+            files = files == null ? new ArrayList<MultipartFile>() : files;
+            for (MultipartFile file: files) {
+                // Validate file: Size of file must be less than or equal to 10MB.
+                if (file.getSize() == 0) {
+                    continue;
+                }
                 if (file.getSize() > 10 * 1024 * 1024) {
                     return ResponseEntity
                             .status(HttpStatus.PAYLOAD_TOO_LARGE)
@@ -68,7 +75,22 @@ public class ProductController {
                             .status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                             .body("Files must be image");
                 }
+                // storeFile: save file to uploads directory and update thumnail in ProductDTO
+                String fileName = storeFile(file);
+
+                // Save instance into database: updating
             }
+            /*
+            *
+            * {
+                    "name": "Mouse",
+                    "price": 100000,
+                    "thumbnail": "",
+                    "description": "Mouse uses for Mac",
+                    "category_id": 2
+            * } -> transform from JSON to form data in order to upload image
+            *
+            * */
             return ResponseEntity.ok().body("Create product: " + productDTO.toString());
 
         } catch (Exception e) {
