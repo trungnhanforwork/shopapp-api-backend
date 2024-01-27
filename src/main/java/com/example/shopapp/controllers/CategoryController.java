@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 //@Validated
-@RequestMapping("api/v1/categories") // Request mapping with url: http://localhost:8088/api/v1/categories
+@RequestMapping("${api.prefix}/categories") // Request mapping with url: http://localhost:8088/api/v1/categories
 public class CategoryController {
 
     @GetMapping("")

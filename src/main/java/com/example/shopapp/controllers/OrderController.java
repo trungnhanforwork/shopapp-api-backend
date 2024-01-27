@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/orders")
+@RequestMapping("${api.prefix}/orders")
 public class OrderController {
     @PostMapping("")
     public ResponseEntity<?> createOrder(
@@ -41,7 +41,7 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(
-            @PathVariable("id") Long id,
+            @Valid @PathVariable("id") Long id,
             @RequestBody OrderDTO orderDTO
     ) {
         return ResponseEntity.status(HttpStatus.OK).body("Update order successfull with id: " + id);
@@ -49,7 +49,7 @@ public class OrderController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOrder(
-            @PathVariable("id") Long id
+            @Valid @PathVariable Long id
     ) {
         return ResponseEntity.status(HttpStatus.OK).body("Delete order successfull with id: " + id);
     }

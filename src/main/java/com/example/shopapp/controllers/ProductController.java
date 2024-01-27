@@ -24,7 +24,7 @@ import java.util.UUID;
 
 
 
-@RequestMapping("api/v1/products") // url: http://localhost:8088/api/v1/product
+@RequestMapping("${api.prefix}/products") // url: http://localhost:8088/api/v1/product
 @RestController
 public class ProductController {
     @GetMapping("")
@@ -100,14 +100,14 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProduct(
-            @PathVariable Long id,
+            @Valid @PathVariable Long id,
             @RequestBody ProductDTO productDTO
     ) {
         return ResponseEntity.ok("Update product with id: " + id + productDTO.toString());
     }
 
     @DeleteMapping ("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProduct(@Valid @PathVariable Long id) {
         return ResponseEntity.ok("Delete product with id: " + id);
     }
 
