@@ -2,10 +2,8 @@ package com.example.shopapp.models;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.util.Date;
 
 @Entity
@@ -14,6 +12,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,10 +37,10 @@ public class User extends BaseEntity {
     private Date dateOfBirth;
 
     @Column(name = "facebook_account_id")
-    private Boolean facebookAccountId;
+    private Integer facebookAccountId;
 
     @Column(name = "google_account_id")
-    private Boolean googleAccountId;
+    private Integer googleAccountId;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
