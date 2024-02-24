@@ -26,7 +26,6 @@ public class OrderDetail {
     @JoinColumn(name = "product_id")
     private Product product;
 
-
     private Float price;
 
     @Column(name = "number_of_products")
